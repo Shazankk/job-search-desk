@@ -5,7 +5,7 @@ import sys
 import pytest
 import requests
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
-from hr_agent.core import ROOT
+from job_search_desk.core import ROOT
 
 
 @pytest.fixture(autouse=True)

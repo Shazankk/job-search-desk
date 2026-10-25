@@ -5,7 +5,8 @@ desk_dashboard_pids() {
   local pid dir
   for pid in $(/usr/bin/pgrep -f 'streamlit run dashboard.py' 2>/dev/null); do
     dir=$(/usr/sbin/lsof -a -p "$pid" -d cwd -Fn 2>/dev/null | /usr/bin/sed -n 's/^n//p')
-    [[ -f "$dir/hr_agent/runner.py" && -f "$dir/dashboard.py" ]] && print "$pid"
+    # job_search_desk/ now; hr_agent/ in releases before the rename.
+    [[ ( -f "$dir/job_search_desk/runner.py" || -f "$dir/hr_agent/runner.py" ) && -f "$dir/dashboard.py" ]] && print "$pid"
   done
   return 0  # launchers run with errexit; finding nothing is not an error
 }

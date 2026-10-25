@@ -3,11 +3,11 @@ import json
 from pathlib import Path
 from unittest.mock import patch, MagicMock
 import pytest
-from hr_agent.core import db,save_job,load_config,event
-from hr_agent.discovery import plan,queries,himalayas_job,search_himalayas,search_adzuna,coverage_report
-from hr_agent.profile import infer_profile,refresh_scores,replace_resume
-from hr_agent.scoring import score
-from hr_agent.resume import read_facts
+from job_search_desk.core import db,save_job,load_config,event
+from job_search_desk.discovery import plan,queries,himalayas_job,search_himalayas,search_adzuna,coverage_report
+from job_search_desk.profile import infer_profile,refresh_scores,replace_resume
+from job_search_desk.scoring import score
+from job_search_desk.resume import read_facts
 
 
 def remote(**changes):
@@ -47,7 +47,7 @@ def test_remote_india_country_timezone_and_conflicting_description():
 
 
 def test_source_apply_link_is_preserved_and_visible_in_brief(root):
-    from hr_agent.packets import packet
+    from job_search_desk.packets import packet
     c=config(root);facts=read_facts(root/c['resume'])
     j=himalayas_job(remote(),'India')
     con=db(root);ident,_=save_job(con,j,score(j,facts,c));row=con.execute('SELECT * FROM jobs WHERE id=?',(ident,)).fetchone()
@@ -61,7 +61,7 @@ def test_source_apply_link_is_preserved_and_visible_in_brief(root):
 def test_search_cache_is_separate_for_different_queries(root):
     response=json.dumps({'jobs':[remote()]}).encode()
     spec={'query':'human resources','country':'India'}
-    with patch('hr_agent.discovery.get',return_value=response) as get:
+    with patch('job_search_desk.discovery.get',return_value=response) as get:
         assert len(search_himalayas(root,spec,{'pages_per_query':1}))==1
         search_himalayas(root,spec,{'pages_per_query':1})
         search_himalayas(root,{'query':'software engineer','country':'India'},{'pages_per_query':1})
@@ -80,12 +80,12 @@ def test_expired_listings_and_packets_removed(root):
 
 def test_adzuna_requires_credentials_and_sends_city_no_salary(root):
     spec={'query':'HR manager','location':'Pune, India','country_code':'in'}
-    with patch('hr_agent.discovery.secret',return_value=''),patch('hr_agent.discovery.requests.get') as get:
+    with patch('job_search_desk.discovery.secret',return_value=''),patch('job_search_desk.discovery.requests.get') as get:
         with pytest.raises(ValueError):search_adzuna(root,spec,{})
         get.assert_not_called()
     response=MagicMock();response.content=b'{}'
     response.json.return_value={'results':[{'title':'HR Manager','company':{'display_name':'Synthetic'},'redirect_url':'https://example.com/adzuna-job','location':{'display_name':'Pune'},'description':'Snippet only','created':''}]}
-    with patch('hr_agent.discovery.secret',return_value='test-only'),patch('hr_agent.discovery.requests.get',return_value=response) as get:
+    with patch('job_search_desk.discovery.secret',return_value='test-only'),patch('job_search_desk.discovery.requests.get',return_value=response) as get:
         rows=search_adzuna(root,spec,{})
         params=get.call_args.kwargs['params']
         assert params['where']=='Pune' and params['what']=='HR manager'
@@ -128,7 +128,7 @@ def test_upgrade_keeps_old_resume_and_job_history(root,tmp_path):
 
 def test_dashboard_credentials_never_go_to_configuration(root,monkeypatch):
     from streamlit.testing.v1 import AppTest
-    import hr_agent.core as core
+    import job_search_desk.core as core
     original=core.load_config
     monkeypatch.setattr(core,'ROOT',root)
     monkeypatch.setattr(core,'load_config',lambda *args:original(args[0] if args else root))
@@ -136,7 +136,7 @@ def test_dashboard_credentials_never_go_to_configuration(root,monkeypatch):
     assert not app.exception
     next(w for w in app.text_input if w.label=='Adzuna app ID').set_value('test-only-id')
     next(w for w in app.text_input if w.label=='Adzuna app key').set_value('test-only-key')
-    with patch('hr_agent.credentials.store') as store:
+    with patch('job_search_desk.credentials.store') as store:
         next(w for w in app.button if w.label=='Save Adzuna credentials to Keychain').click().run()
         assert store.call_count==2
     assert not app.exception
@@ -154,7 +154,7 @@ def test_primary_title_technology_gap_is_not_high_fit(root):
 
 def test_packet_folder_is_dated_named_after_the_job_and_migrates_old_layouts(root):
     from datetime import datetime
-    from hr_agent.packets import packet, folder_name, organize_packets
+    from job_search_desk.packets import packet, folder_name, organize_packets
     c=config(root);facts=read_facts(root/c['resume'])
     j=himalayas_job(remote(),'India')
     con=db(root);ident,_=save_job(con,j,score(j,facts,c))

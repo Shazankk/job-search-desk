@@ -1,23 +1,71 @@
-# Job Search Desk
+<p align="center">
+  <img src="site/assets/logo.svg" width="96" height="96" alt="Job Search Desk logo">
+</p>
 
-A local-first job-search desk that finds openings for your resume's roles, explains their fit and prepares factual application documents for you to review.
+<h1 align="center">Job Search Desk</h1>
 
-**Website and Mac download:** https://shazankk.github.io/job-search-desk/
+<p align="center">
+  <b>Find jobs that fit, and see exactly why.</b><br>
+  A free, local-first job search for any career, anywhere. It explains every fit score<br>
+  and tailors your real resume without inventing a single word.
+</p>
 
-## What it does
+<p align="center">
+  <a href="https://github.com/Shazankk/job-search-desk/actions/workflows/tests.yml"><img src="https://github.com/Shazankk/job-search-desk/actions/workflows/tests.yml/badge.svg" alt="Tests"></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/licence-MIT-1B2A41" alt="MIT licence"></a>
+  <img src="https://img.shields.io/badge/python-3.11%2B-1B2A41" alt="Python 3.11+">
+  <img src="https://img.shields.io/badge/runs%20on-macOS-1B2A41" alt="Runs on macOS">
+  <img src="https://img.shields.io/badge/data-stays%20on%20your%20Mac-1F7A55" alt="Data stays on your Mac">
+</p>
 
-- Runs on your computer as a small Streamlit dashboard at http://127.0.0.1:8501.
-- Finds openings from free sources, your job-alert emails, employer watchlists and manual imports.
-- Scores jobs out of 10, with reasons, deductions and missing skills.
-- Prepares a tailored Word resume, a job brief, contact-research notes and an outreach draft.
-- Keeps your job history and documents locally. You review everything and apply yourself. It never applies or messages employers or contacts.
+<p align="center">
+  <a href="https://shazankk.github.io/job-search-desk/"><b>Website</b></a> &nbsp;&nbsp;
+  <a href="https://github.com/Shazankk/job-search-desk/archive/refs/heads/main.zip"><b>Download for Mac</b></a> &nbsp;&nbsp;
+  <a href="#quick-start"><b>Quick start</b></a> &nbsp;&nbsp;
+  <a href="docs/SOURCES.md"><b>Sources</b></a> &nbsp;&nbsp;
+  <a href="CONTRIBUTING.md"><b>Contributing</b></a>
+</p>
+
+<p align="center">
+  <img src="docs/images/dashboard.png" width="860" alt="The Job Search Desk dashboard showing a job scored 9 out of 10 with the reason for each point">
+</p>
 
 ## Why it's different
 
-- **Factual tailoring.** It only reorders your real resume paragraphs. It never invents achievements or qualifications. `resume-provenance.json` records paragraph IDs and a source-text hash so you can check preservation.
-- **Explainable scores.** You can see the evidence, gaps and deductions behind each score.
-- **Free defaults.** Default discovery sources need no account or API key. Their coverage and rate limits vary.
-- **Optional AI.** OpenAI or Claude API access can help order existing paragraphs. It is off unless you enable it and consent to sharing job text and resume paragraphs. Invalid output or API failures fall back to local ordering.
+Most job tools either spray applications for you or rewrite your resume with an AI that can invent experience. Job Search Desk does neither.
+
+| | Auto-apply bots | AI resume writers | **Job Search Desk** |
+|---|:---:|:---:|:---:|
+| Writes things you never did | Sometimes | Often | **Never** |
+| Applies or messages without you | Yes | No | **Never** |
+| Explains why a job fits | No | Rarely | **Every score, line by line** |
+| Your resume and history stay on your computer | No | No | **Yes** |
+| Cost | Subscription | Subscription | **Free and open source** |
+
+- **Factual tailoring.** It only reorders your real resume paragraphs. `resume-provenance.json` records every paragraph ID and a source-text hash, so you can prove nothing was changed.
+- **Explainable scores.** Every score lists its points, deductions (wrong experience level, unfamiliar sector) and the skills you don't show.
+- **Any career, anywhere.** Type places however you like (`pune`, `LONDON`, `bangalore`), pick on-site, hybrid or remote, and it recognises 16 career fields from your resume.
+- **Free by default.** The default sources need no account or API key. AI is optional and only ever reorders what you wrote.
+
+## How it works
+
+```mermaid
+flowchart LR
+    R[Your resume] --> P[Roles, skills<br>and places]
+    P --> S[Search free sources<br>and your job alerts]
+    S --> F[Score each job<br>with reasons]
+    F --> D[Tailored resume, brief<br>and outreach draft]
+    D --> Y[You review<br>and apply]
+```
+
+## What it does
+
+- Runs on your computer as a small dashboard at http://127.0.0.1:8501.
+- Finds openings from free sources, your job-alert emails, employer watchlists and manual imports.
+- Scores jobs out of 10, with reasons, deductions and missing skills, and hides reposts and duplicates.
+- Prepares a tailored Word resume, a job brief, contact-research notes and an outreach draft, filed by date.
+- Shows which skills your matching jobs keep asking for that your resume doesn't show.
+- Keeps your job history and documents locally. You review everything and apply yourself.
 
 ## Quick start
 
@@ -73,10 +121,10 @@ These are Unix shell commands. On Windows, creating an environment usually uses 
 After opening the dashboard, follow steps 3–6 above. In another terminal with the environment activated, these commands are also available:
 
 ```sh
-python -m hr_agent.runner check
-python -m hr_agent.runner demo
-python -m hr_agent.runner run
-python -m hr_agent.runner prepare
+python -m job_search_desk.runner check
+python -m job_search_desk.runner demo
+python -m job_search_desk.runner run
+python -m job_search_desk.runner prepare
 ```
 
 `run` discovers and prepares jobs. `prepare` uses saved jobs. Either can send the optional digest when configured; add `--no-email` to suppress it.
@@ -172,7 +220,7 @@ Check **Activity** and `logs/agent.log` when a source fails. A source error does
 
 ## Development and contributing
 
-The code lives in `hr_agent/`; that package name is historical. With your virtual environment activated:
+The code lives in `job_search_desk/`. With your virtual environment activated:
 
 ```sh
 python -m pip install -r requirements-dev.txt
@@ -188,3 +236,5 @@ Contributions are welcome, especially new sources, more career families and plac
 Job Search Desk is available under the [MIT licence](LICENSE).
 
 The LinkedIn guest-search workflow is adapted from the MIT-licensed ai-job-search-india project. See [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for attribution and the third-party licence.
+
+If Job Search Desk helps your search, a star on GitHub helps other job seekers find it.

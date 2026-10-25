@@ -7,7 +7,7 @@ if [[ ! -x .venv/bin/python ]]; then
   read '?Press Return to close.'
   exit 1
 fi
-.venv/bin/python -m hr_agent.runner demo
+.venv/bin/python -m job_search_desk.runner demo
 open examples/demo-output/artifacts
 print 'Synthetic demo only; no network, AI or email was used.'
 read '?Press Return to close.'

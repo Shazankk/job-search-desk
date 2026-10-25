@@ -119,7 +119,8 @@ def score(job, facts, config):
     junior = bool(re.search(r'\bintern\b|\btrainee\b|\bjunior\b|\bassociate\b|\bcoordinator\b|\bassistant\b', title)) and not senior
     target_level = profile.get('target_seniority','mid')
     title_points = 3.0 if role and (target_level != 'senior' or senior) else 2.5 if aligned else 0.0
-    reasons.append(f'Role/title: {title_points}/3; configured title match={role}, seniority signal={senior}')
+    match_text = 'matches one of your target titles' if role else 'in your career field' if aligned else 'outside your target roles'
+    reasons.append(f'Role and seniority: {title_points}/3; {match_text}'+('; senior-level title' if senior else ''))
     location_points, location_reason, location_warnings = location_fit(job, config)
     if location_reason:
         reasons.append(location_reason)

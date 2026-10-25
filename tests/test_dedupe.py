@@ -1,4 +1,4 @@
-from hr_agent.core import db, save_job, dedupe
+from job_search_desk.core import db, save_job, dedupe
 
 TEXT = 'Lead people strategy, performance management, rewards and engagement for a growing software company. '*6
 BLANK = {'score':5,'reasons':[],'gaps':[],'warnings':[],'evidence':[]}

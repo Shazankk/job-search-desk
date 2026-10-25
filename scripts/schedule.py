@@ -6,13 +6,14 @@ import plistlib
 import subprocess
 import sys
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
-from hr_agent.core import ROOT, load_config
+from job_search_desk.core import ROOT, load_config
 
-LABEL = 'local.hr-search.daily'
+LABEL = 'local.job-search-desk.daily'
+LEGACY_LABEL = 'local.hr-search.daily'
 
 
 def plist(root, cfg):
-    return {'Label':LABEL,'ProgramArguments':[str(root/'.venv/bin/python'),'-m','hr_agent.runner','run'],
+    return {'Label':LABEL,'ProgramArguments':[str(root/'.venv/bin/python'),'-m','job_search_desk.runner','run'],
             'WorkingDirectory':str(root),
             'StartCalendarInterval':{'Hour':int(cfg['schedule']['hour']),'Minute':int(cfg['schedule']['minute'])},
             'RunAtLoad':False,'ProcessType':'Background','Umask':0o077,
@@ -33,14 +34,15 @@ def main():
         raise SystemExit('launchd installation requires macOS')
     target = Path.home()/'Library/LaunchAgents'/f'{LABEL}.plist'
     domain = f'gui/{os.getuid()}'
+    for label in (LABEL,LEGACY_LABEL):  # also clear a schedule installed by an earlier release
+        subprocess.run(['/bin/launchctl','bootout',domain+'/'+label],capture_output=True)
+    (Path.home()/'Library/LaunchAgents'/f'{LEGACY_LABEL}.plist').unlink(missing_ok=True)
     if args.action == 'uninstall':
-        subprocess.run(['/bin/launchctl','bootout',domain+'/'+LABEL],capture_output=True)
         target.unlink(missing_ok=True)
         print('Daily schedule removed. Local job data retained.')
         return
     (ROOT/'logs').mkdir(exist_ok=True,mode=0o700)
     target.parent.mkdir(parents=True,exist_ok=True)
-    subprocess.run(['/bin/launchctl','bootout',domain+'/'+LABEL],capture_output=True)
     target.write_bytes(raw)
     target.chmod(0o600)
     result = subprocess.run(['/bin/launchctl','bootstrap',domain,str(target)],capture_output=True,text=True)

@@ -1,6 +1,6 @@
 import pytest
-from hr_agent.discovery import FAMILY_QUERIES
-from hr_agent.profile import FAMILIES, infer_profile, title_families
+from job_search_desk.discovery import FAMILY_QUERIES
+from job_search_desk.profile import FAMILIES, infer_profile, title_families
 
 
 @pytest.mark.parametrize('family,title,experience',[

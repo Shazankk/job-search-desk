@@ -1,13 +1,13 @@
 import json
 from pathlib import Path
 from unittest.mock import patch
-from hr_agent.core import load_config,db,save_job
-from hr_agent.portals import search_links,portal_job_url,alert_jobs
-from hr_agent.sources import read_alert,plain
-from hr_agent.runner import run
-from hr_agent.scoring import score
-from hr_agent.resume import read_facts
-from hr_agent.digest import send_digest
+from job_search_desk.core import load_config,db,save_job
+from job_search_desk.portals import search_links,portal_job_url,alert_jobs
+from job_search_desk.sources import read_alert,plain
+from job_search_desk.runner import run
+from job_search_desk.scoring import score
+from job_search_desk.resume import read_facts
+from job_search_desk.digest import send_digest
 
 
 def test_native_search_links_use_current_titles_and_location(root):
@@ -38,7 +38,7 @@ def test_naukri_and_slug_linkedin_urls():
 def test_alert_only_run_does_not_call_job_search_or_ai(root):
     path=Path(__file__).resolve().parents[1]/'examples/linkedin-alert.eml'
     (root/'data/inbox/linkedin.eml').write_bytes(path.read_bytes())
-    with patch('hr_agent.runner.search',side_effect=AssertionError('No search')),patch('hr_agent.runner.fetch',side_effect=AssertionError('No feeds')),patch('hr_agent.resume.ai_order',side_effect=AssertionError('No AI')):
+    with patch('job_search_desk.runner.search',side_effect=AssertionError('No search')),patch('job_search_desk.runner.fetch',side_effect=AssertionError('No feeds')),patch('job_search_desk.resume.ai_order',side_effect=AssertionError('No AI')):
         result=run(root,allow_email=False,alerts_only=True)
     assert result['alert_leads']==1 and result['prepared']==0 and result['failures']==0
 
@@ -58,7 +58,7 @@ def test_digest_includes_leads_below_full_score_threshold(root):
     cfg['email'].update(enabled=True,username='sender@example.com',include_job_details=True,**{'from':'sender@example.com','to':'self@example.com'})
     j=read_alert(Path(__file__).resolve().parents[1]/'examples/linkedin-alert.eml')[0]
     con=db(root);save_job(con,j,score(j,facts,cfg))
-    with patch('hr_agent.digest.secret',return_value='test-only'),patch('hr_agent.digest.smtplib.SMTP_SSL') as smtp:
+    with patch('job_search_desk.digest.secret',return_value='test-only'),patch('job_search_desk.digest.smtplib.SMTP_SSL') as smtp:
         smtp.return_value.__enter__.return_value.send_message.return_value={}
         assert send_digest(con,cfg,root)=='sent'
         message=smtp.return_value.__enter__.return_value.send_message.call_args.args[0]
@@ -71,7 +71,7 @@ def test_digest_includes_leads_below_full_score_threshold(root):
 
 def test_leads_visible_even_when_jobs_fit_filter_is_seven(root,monkeypatch):
     from streamlit.testing.v1 import AppTest
-    import hr_agent.core as core
+    import job_search_desk.core as core
     cfg=load_config(root);facts=read_facts(root/cfg['resume'])
     con=db(root);j=read_alert(Path(__file__).resolve().parents[1]/'examples/linkedin-alert.eml')[0]
     save_job(con,j,score(j,facts,cfg));con.close()

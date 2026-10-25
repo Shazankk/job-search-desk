@@ -15,7 +15,7 @@ from datetime import datetime, timezone
 from urllib.parse import urlsplit, urlunsplit, parse_qsl, urlencode
 
 ROOT = Path(__file__).resolve().parents[1]
-LOG = logging.getLogger('hr_agent')
+LOG = logging.getLogger('job_search_desk')
 
 
 def now():
@@ -80,10 +80,11 @@ def secret(name):
         except (ImportError,OSError):
             pass
         try:
-            p = subprocess.run(['/usr/bin/security', 'find-generic-password', '-s',
-                                'local.hr-search.' + name, '-w'], capture_output=True, text=True, timeout=15)
-            if p.returncode == 0:
-                return p.stdout.strip()
+            for prefix in ('local.job-search-desk.','local.hr-search.'):
+                p = subprocess.run(['/usr/bin/security', 'find-generic-password', '-s',
+                                    prefix + name, '-w'], capture_output=True, text=True, timeout=15)
+                if p.returncode == 0:
+                    return p.stdout.strip()
         except (OSError, subprocess.TimeoutExpired):
             LOG.warning('Keychain unavailable; run interactively to check access')
     return ''

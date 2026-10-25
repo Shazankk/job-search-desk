@@ -8,10 +8,10 @@ import subprocess
 import sys
 import tempfile
 sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
-from hr_agent.core import ROOT, load_config
-from hr_agent.profile import atomic_config, sync_profile, refresh_scores
-from hr_agent.resume import read_facts
-from hr_agent.runner import run_lock
+from job_search_desk.core import ROOT, load_config
+from job_search_desk.profile import atomic_config, sync_profile, refresh_scores
+from job_search_desk.resume import read_facts
+from job_search_desk.runner import run_lock
 
 
 def import_previous(old,root=ROOT):
@@ -58,7 +58,7 @@ def import_previous(old,root=ROOT):
             cfg,_=sync_profile(root,cfg,facts)
             refresh_scores(root,cfg,facts)
             # Reparse original email files with the v1.1 portal-card parser.
-            from hr_agent.core import db
+            from job_search_desk.core import db
             con=db(root)
             con.execute('DELETE FROM imports')
             con.execute("DELETE FROM jobs WHERE source='email-alert' AND needs_review=1 AND status IN ('new','shortlisted')")

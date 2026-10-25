@@ -1,8 +1,8 @@
 import json
-from hr_agent.core import load_config
-from hr_agent.profile import infer_profile, skill_items, sync_profile, PARSER_VERSION
-from hr_agent.resume import read_facts
-from hr_agent.scoring import score, required_years, resume_years
+from job_search_desk.core import load_config
+from job_search_desk.profile import infer_profile, skill_items, sync_profile, PARSER_VERSION
+from job_search_desk.resume import read_facts
+from job_search_desk.scoring import score, required_years, resume_years
 
 HR_DUTIES = ('Own people strategy as HR business partner, performance management and KPIs, talent acquisition and workforce planning, '
              'compensation and benefits, learning and leadership development, employee engagement, statutory compliance and POSH. ')

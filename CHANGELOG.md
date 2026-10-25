@@ -9,6 +9,9 @@
 - Organise documents into dated folders using the day each job was first found.
 - Restart the dashboard cleanly when its launcher is opened again.
 - Publish public setup, source, validation and contribution guides, an MIT licence and an offline test workflow.
+- Add a logo, browser-tab and home-screen icons, a link-preview image and a project website with a Mac download.
+- Show each job's score as a points table with reasons, with skills, evidence, description and documents in tabs; brand theme for the dashboard.
+- Rename the code package from `hr_agent` to `job_search_desk`; saved Keychain keys and older schedules are still recognised.
 
 # v1.3 — Naukri leads, lead completion, honest scores, duplicates
 

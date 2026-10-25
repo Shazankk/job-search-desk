@@ -7,5 +7,5 @@ if [[ ! -x .venv/bin/python ]]; then
   read '?Press Return to close.'
   exit 1
 fi
-.venv/bin/python -m hr_agent.runner run
+.venv/bin/python -m job_search_desk.runner run
 read '?Run finished. Press Return to close.'

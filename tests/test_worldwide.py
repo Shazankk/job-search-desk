@@ -1,8 +1,8 @@
 import json
-from hr_agent.core import load_config
-from hr_agent.discovery import plan, himalayas_job
-from hr_agent.portals import search_links
-from hr_agent.scoring import location_fit, work_mode
+from job_search_desk.core import load_config
+from job_search_desk.discovery import plan, himalayas_job
+from job_search_desk.portals import search_links
+from job_search_desk.scoring import location_fit, work_mode
 
 
 def cfg(places=('Pune, India',), modes=('onsite','hybrid','remote'), home='India'):
@@ -79,7 +79,7 @@ def test_himalayas_eligibility_uses_home_country():
 def test_dashboard_recognises_places_and_saves_work_arrangements(root,monkeypatch):
     from pathlib import Path
     from streamlit.testing.v1 import AppTest
-    import hr_agent.core as core
+    import job_search_desk.core as core
     original=core.load_config
     monkeypatch.setattr(core,'ROOT',root)
     monkeypatch.setattr(core,'load_config',lambda *args:original(args[0] if args else root))

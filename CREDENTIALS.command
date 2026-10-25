@@ -13,6 +13,6 @@ case "$choice" in
   *) print 'No changes made.'; exit 1 ;;
 esac
 # Omitting the password argument makes security prompt for it; the secret is not in process arguments.
-/usr/bin/security add-generic-password -U -a "$USER" -s "local.hr-search.$credential" -w
+/usr/bin/security add-generic-password -U -a "$USER" -s "local.job-search-desk.$credential" -w
 print 'Saved. The app will read this secret from Keychain when needed.'
 read '?Press Return to close.'

@@ -5,13 +5,13 @@ from pathlib import Path
 from unittest.mock import MagicMock, patch
 import pytest
 from docx import Document
-from hr_agent.core import load_config, db, canonical, safe_url, save_job, job_id
-from hr_agent.scoring import score
-from hr_agent.resume import read_facts, write_resume, validated_order, groups, ai_order
-from hr_agent.sources import normalize, rss, read_alert, read_import
-from hr_agent.runner import run, run_lock
-from hr_agent.packets import contacts_for
-from hr_agent.digest import send_digest
+from job_search_desk.core import load_config, db, canonical, safe_url, save_job, job_id
+from job_search_desk.scoring import score
+from job_search_desk.resume import read_facts, write_resume, validated_order, groups, ai_order
+from job_search_desk.sources import normalize, rss, read_alert, read_import
+from job_search_desk.runner import run, run_lock
+from job_search_desk.packets import contacts_for
+from job_search_desk.digest import send_digest
 
 
 def inputs(root):
@@ -58,11 +58,11 @@ def test_model_cannot_add_or_drop_facts(root):
     assert not validated_order([True,2,3],[1,2,3])
     response = MagicMock()
     response.json.return_value = {'output':[{'content':[{'type':'output_text','text':'{"order":[999]}'}]}]}
-    with patch('hr_agent.resume.secret',return_value='test-only'),patch('hr_agent.resume.requests.post',return_value=response) as post:
+    with patch('job_search_desk.resume.secret',return_value='test-only'),patch('job_search_desk.resume.requests.post',return_value=response) as post:
         assert ai_order([1,2],facts,jobs[0],{'provider':'openai','model':'test','share_resume_facts':True}) is None
         assert post.call_args.kwargs['json']['store'] is False
     response.json.return_value = {'content':[{'type':'text','text':'{"order":[2,1]}'}]}
-    with patch('hr_agent.resume.secret',return_value='test-only'),patch('hr_agent.resume.requests.post',return_value=response):
+    with patch('job_search_desk.resume.secret',return_value='test-only'),patch('job_search_desk.resume.requests.post',return_value=response):
         assert ai_order([1,2],facts,jobs[0],{'provider':'claude','model':'test','share_resume_facts':True}) == [2,1]
 
 
@@ -121,7 +121,7 @@ def test_failure_isolation_and_import_recovery(root):
                       {'type':'greenhouse','board':'good','company':'Good','enabled':True}]
     (root/'config/settings.json').write_text(json.dumps(cfg))
     (root/'data/imports/bad.json').write_text('{')
-    with patch('hr_agent.runner.fetch',side_effect=[ValueError('fail'),[jobs[0]]]):
+    with patch('job_search_desk.runner.fetch',side_effect=[ValueError('fail'),[jobs[0]]]):
         result = run(root,allow_email=False)
     assert result['prepared'] == 1 and result['failures'] == 2
     cfg['sources'] = []
@@ -140,11 +140,11 @@ def test_verified_contacts_only(root):
 def test_digest_disabled_reservation_and_no_outreach(root):
     cfg,facts,jobs = inputs(root)
     con = db(root)
-    with patch('hr_agent.digest.smtplib.SMTP_SSL') as smtp:
+    with patch('job_search_desk.digest.smtplib.SMTP_SSL') as smtp:
         assert send_digest(con,cfg,root) == 'disabled'
         smtp.assert_not_called()
     cfg['email'].update(enabled=True,username='sender@example.com',**{'from':'sender@example.com','to':'self@example.com'})
-    with patch('hr_agent.digest.secret',return_value='test-only'),patch('hr_agent.digest.smtplib.SMTP_SSL') as smtp:
+    with patch('job_search_desk.digest.secret',return_value='test-only'),patch('job_search_desk.digest.smtplib.SMTP_SSL') as smtp:
         smtp.return_value.__enter__.return_value.send_message.return_value = {}
         assert send_digest(con,cfg,root) == 'sent'
         assert send_digest(con,cfg,root) == 'sent'
@@ -156,7 +156,7 @@ def test_digest_failure_not_retried(root):
     cfg,_,_ = inputs(root)
     cfg['email'].update(enabled=True,username='sender@example.com',**{'from':'sender@example.com','to':'self@example.com'})
     con = db(root)
-    with patch('hr_agent.digest.secret',return_value='test-only'),patch('hr_agent.digest.smtplib.SMTP_SSL',side_effect=OSError('offline')) as smtp:
+    with patch('job_search_desk.digest.secret',return_value='test-only'),patch('job_search_desk.digest.smtplib.SMTP_SSL',side_effect=OSError('offline')) as smtp:
         assert send_digest(con,cfg,root) == 'uncertain_or_failed'
         assert send_digest(con,cfg,root) == 'uncertain_or_failed'
         assert smtp.call_count == 1
@@ -184,13 +184,13 @@ def test_schedule_paths_and_xml(root):
 
 
 def test_imap_readonly_and_content_dedup(root):
-    from hr_agent.mailbox import ingest_imap
+    from job_search_desk.mailbox import ingest_imap
     client = MagicMock()
     client.select.return_value = ('OK',[])
     raw = (root/'examples/alert.eml').read_bytes()
     client.uid.side_effect = [('OK',[b'1']),('OK',[(b'meta',raw)]),('OK',[b'1']),('OK',[(b'meta',raw)])]
     cfg = {'enabled':True,'host':'imap.example.com','username':'test','folder':'Job Alerts'}
-    with patch('hr_agent.mailbox.secret',return_value='test-only'),patch('hr_agent.mailbox.imaplib.IMAP4_SSL',return_value=client):
+    with patch('job_search_desk.mailbox.secret',return_value='test-only'),patch('job_search_desk.mailbox.imaplib.IMAP4_SSL',return_value=client):
         assert ingest_imap(root,cfg) == 1
         assert ingest_imap(root,cfg) == 0
     client.select.assert_called_with('"Job Alerts"',readonly=True)
@@ -199,7 +199,7 @@ def test_imap_readonly_and_content_dedup(root):
 
 def test_dashboard_demo_flow(root,monkeypatch):
     from streamlit.testing.v1 import AppTest
-    import hr_agent.core as core
+    import job_search_desk.core as core
     original = core.load_config
     monkeypatch.setattr(core,'ROOT',root)
     monkeypatch.setattr(core,'load_config',lambda *args: original(args[0] if args else root))

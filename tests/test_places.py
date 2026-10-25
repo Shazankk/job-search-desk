@@ -2,7 +2,7 @@ import re
 
 import pytest
 
-from hr_agent import places
+from job_search_desk import places
 
 
 ADZUNA={

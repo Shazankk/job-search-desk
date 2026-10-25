@@ -4,12 +4,12 @@ import gzip
 import json
 from unittest.mock import MagicMock, patch
 import pytest
-from hr_agent import naukri
-from hr_agent.core import load_config, db, save_job
-from hr_agent.discovery import plan
-from hr_agent.profile import infer_profile
-from hr_agent.resume import read_facts
-from hr_agent.scoring import score
+from job_search_desk import naukri
+from job_search_desk.core import load_config, db, save_job
+from job_search_desk.discovery import plan
+from job_search_desk.profile import infer_profile
+from job_search_desk.resume import read_facts
+from job_search_desk.scoring import score
 
 
 def ident(days_ago, serial='013720'):

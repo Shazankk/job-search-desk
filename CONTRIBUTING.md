@@ -16,7 +16,7 @@ python -m pip install -r requirements-dev.txt
 python -m pytest tests -q
 ```
 
-The activation command above is for a Unix shell. The application package is `hr_agent/`, a historical name. Start the dashboard with:
+The activation command above is for a Unix shell. The application package is `job_search_desk/`. Start the dashboard with:
 
 ```sh
 python -m streamlit run dashboard.py --server.address 127.0.0.1

@@ -5,21 +5,21 @@ from pathlib import Path
 import re
 import webbrowser
 import streamlit as st
-from hr_agent.core import ROOT, load_config, db, save_job, safe_url, now
-from hr_agent.runner import run, demo_root, run_lock
-from hr_agent.resume import read_facts
-from hr_agent.scoring import score
-from hr_agent.profile import sync_profile, refresh_scores, replace_resume, atomic_config, source_hash
-from hr_agent.ai import connection_status, test_connection
-from hr_agent.discovery import plan, coverage_report
-from hr_agent.credentials import store as store_credential
-from hr_agent.core import secret
-from hr_agent.portals import search_links
-from hr_agent.places import resolve, countries, country_of
-from hr_agent.scoring import MODE_NAMES
+from job_search_desk.core import ROOT, load_config, db, save_job, safe_url, now
+from job_search_desk.runner import run, demo_root, run_lock
+from job_search_desk.resume import read_facts
+from job_search_desk.scoring import score
+from job_search_desk.profile import sync_profile, refresh_scores, replace_resume, atomic_config, source_hash
+from job_search_desk.ai import connection_status, test_connection
+from job_search_desk.discovery import plan, coverage_report
+from job_search_desk.credentials import store as store_credential
+from job_search_desk.core import secret
+from job_search_desk.portals import search_links
+from job_search_desk.places import resolve, countries, country_of
+from job_search_desk.scoring import MODE_NAMES
 
 os.umask(0o077)
-st.set_page_config(page_title='Job Search Desk',page_icon='🌱',layout='wide')
+st.set_page_config(page_title='Job Search Desk',page_icon=str(Path(__file__).resolve().parent/'site/assets/icon-192.png'),layout='wide')
 st.title('Job Search Desk')
 st.caption('Resume-based matching · factual preparation · you review and apply')
 cfg = load_config()
@@ -106,32 +106,54 @@ with tabs[0]:
             continue
         with st.expander(f"{j['score']}/10 · {j['title']} · {j['company']} · {j['location']}"):
             result = json.loads(j['explanation'])
-            st.caption(f"{j['source']} · first seen {j['first_seen'][:10]} · last seen {j['last_seen'][:10]}")
-            st.link_button('Open job / apply yourself',j['apply_url'] or safe_url(j['url']))
+            deduction = re.compile(r'\((−[\d.]+)\)')
+            left, right = st.columns([1,3],gap='large')
+            left.metric('Fit score',f"{j['score']} / 10")
+            left.link_button('Open job and apply',j['apply_url'] or safe_url(j['url']),type='primary')
             if j['source_url']:
-                st.link_button('Source: '+j['source'].title(),safe_url(j['source_url']))
-            st.write(result['disclaimer'])
+                left.link_button('View source listing',safe_url(j['source_url']))
+            left.caption(f"Found {j['first_seen'][:10]}  \nvia {j['source']}")
+            rows = []
             for reason in result['reasons']:
-                st.text(reason)
-            if result['warnings']:
-                st.warning('\n'.join(result['warnings']))
-            st.write('Unsupported skill groups:',', '.join(result['gaps']) or 'None detected')
-            for item in result['evidence']:
-                st.text(item)
+                label,_,rest = reason.partition(': ')
+                points,_,why = rest.partition('; ')
+                rows.append({'Factor':label,'Points':points,'Why':why})
+            for warning in result['warnings']:
+                found = deduction.search(warning)
+                if found:
+                    label,_,why = warning.partition(': ')
+                    rows.append({'Factor':label,'Points':found.group(1),'Why':why[:found.start()-len(label)-2].strip(' ;')})
+            right.dataframe(rows,hide_index=True,width='stretch')
+            notes = [w for w in result['warnings'] if not deduction.search(w)]
+            if notes:
+                right.warning('\n\n'.join(notes))
+            right.caption(result['disclaimer'])
+            gaps_tab, evidence_tab, description_tab, documents_tab = st.tabs(['Skills to check','Matching resume evidence','Job description','Documents'])
+            with gaps_tab:
+                st.write('Skill areas this job asks for that your resume does not show: '+(', '.join(result['gaps']) or 'none detected')+'.')
+                if result.get('listed_skills_matched'):
+                    st.write('Skills from your resume that this job mentions: '+', '.join(result['listed_skills_matched'])+'.')
+            with evidence_tab:
+                for item in result['evidence'] or ['No matching resume paragraph found; review manually.']:
+                    st.text(item)
+            with description_tab:
+                st.text_area('Job description (untrusted source text)',j['description'],height=220,key='jd'+j['id'],disabled=True)
+            with documents_tab:
+                if j['artifact'] and j['score']>=cfg['min_score'] and not j['needs_review']:
+                    folder = root/j['artifact']
+                    for name,mime in [('tailored-resume.docx','application/vnd.openxmlformats-officedocument.wordprocessingml.document'),
+                                      ('brief.md','text/markdown'),('contacts.md','text/markdown'),('outreach.md','text/markdown'),
+                                      ('resume-provenance.json','application/json')]:
+                        path = folder/name
+                        if path.exists():
+                            st.download_button('Download '+name,path.read_bytes(),file_name=name,mime=mime,key=j['id']+name)
+                else:
+                    st.write(f"Documents are prepared when a job with a full description scores at least {cfg['min_score']} (set in Resume & settings).")
             status = st.selectbox('Application status',['new','shortlisted','applied','dismissed','closed'],
                                   index=['new','shortlisted','applied','dismissed','closed'].index(j['status']),key='status'+j['id'])
             if status != j['status']:
                 con.execute('UPDATE jobs SET status=? WHERE id=?',(status,j['id']))
                 con.commit()
-            if j['artifact'] and j['score']>=cfg['min_score'] and not j['needs_review']:
-                folder = root/j['artifact']
-                for name,mime in [('tailored-resume.docx','application/vnd.openxmlformats-officedocument.wordprocessingml.document'),
-                                  ('brief.md','text/markdown'),('contacts.md','text/markdown'),('outreach.md','text/markdown'),
-                                  ('resume-provenance.json','application/json')]:
-                    path = folder/name
-                    if path.exists():
-                        st.download_button('Download '+name,path.read_bytes(),file_name=name,mime=mime,key=j['id']+name)
-            st.text_area('Job description (untrusted source text)',j['description'],height=160,key='jd'+j['id'],disabled=True)
 
 with tabs[1]:
     st.subheader('LinkedIn & Naukri — primary portal workflow')
@@ -231,7 +253,7 @@ with tabs[1]:
         if not alert_upload or mode!='Live jobs':
             st.error('Choose an .eml file in Live jobs first.')
         else:
-            from hr_agent.sources import read_alert
+            from job_search_desk.sources import read_alert
             import hashlib
             payload=alert_upload.getvalue();folder=ROOT/'data/inbox';folder.mkdir(parents=True,exist_ok=True)
             path=folder/(hashlib.sha256(payload).hexdigest()+'.eml');path.write_bytes(payload)

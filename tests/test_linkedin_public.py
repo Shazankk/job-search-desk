@@ -3,12 +3,12 @@ import json
 from datetime import datetime, timezone
 from unittest.mock import MagicMock, patch
 import pytest
-from hr_agent import linkedin_public as li
-from hr_agent.core import load_config, db
-from hr_agent.discovery import plan
-from hr_agent.profile import infer_profile
-from hr_agent.resume import read_facts
-from hr_agent.runner import run
+from job_search_desk import linkedin_public as li
+from job_search_desk.core import load_config, db
+from job_search_desk.discovery import plan
+from job_search_desk.profile import infer_profile
+from job_search_desk.resume import read_facts
+from job_search_desk.runner import run
 
 CARDS='''<li><div data-entity-urn="urn:li:jobPosting:123"><h3 class="extra base-search-card__title">HR Head</h3><h4 class="base-search-card__subtitle">Synthetic Employer</h4><span class="job-search-card__location">Pune, India</span><time datetime="2026-10-21">4 days ago</time></div></li>'''
 DETAIL='''<h1 class="top-card-layout__title">HR Head</h1><a class="topcard__org-name-link">Synthetic Employer</a><span class="topcard__flavor--bullet">Pune, India</span><div class><p>Ignored empty class attribute</p></div><div class="show-more-less-html__markup"><p>Lead strategic HR and payroll operations.</p><ul><li>Manage performance management and employee relations.</li><li>Oversee recruitment and talent management for the team.</li></ul></div>'''
@@ -106,7 +106,7 @@ def test_access_page_is_failure_not_zero_jobs(root):
 def test_dashboard_saving_discovery_preserves_linkedin_controls(root,monkeypatch):
     from pathlib import Path
     from streamlit.testing.v1 import AppTest
-    import hr_agent.core as core
+    import job_search_desk.core as core
     c=configuration(root);(root/'config/settings.json').write_text(json.dumps(c))
     original=core.load_config
     monkeypatch.setattr(core,'ROOT',root)
@@ -123,8 +123,8 @@ def test_dashboard_saving_discovery_preserves_linkedin_controls(root,monkeypatch
 
 
 def stored_lead(con,c,ident,source='linkedin-public',location='Pune, India',title='HR Head'):
-    from hr_agent.core import save_job
-    from hr_agent.scoring import score
+    from job_search_desk.core import save_job
+    from job_search_desk.scoring import score
     j={'title':title,'company':'Not supplied in alert' if source=='linkedin-alert' else 'Synthetic Employer','location':location,
        'url':f'https://www.linkedin.com/jobs/view/{ident}/','description':'','source':source,'needs_review':True}
     return save_job(con,j,score(j,c['_facts'],c))[0]
@@ -188,7 +188,7 @@ def test_remote_india_search_uses_remote_filter_and_keeps_label(root):
 def test_saving_keeps_the_open_tab(root,monkeypatch):
     from pathlib import Path
     from streamlit.testing.v1 import AppTest
-    import hr_agent.core as core
+    import job_search_desk.core as core
     c=configuration(root);(root/'config/settings.json').write_text(json.dumps(c))
     original=core.load_config
     monkeypatch.setattr(core,'ROOT',root)

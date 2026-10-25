@@ -3,12 +3,12 @@ from pathlib import Path
 from unittest.mock import patch
 from collections import Counter
 import pytest
-from hr_agent.core import load_config, db, save_job
-from hr_agent.profile import replace_resume, infer_profile, sync_profile, refresh_scores, source_hash
-from hr_agent.scoring import score
-from hr_agent.runner import run
-from hr_agent.resume import read_facts
-from hr_agent.ai import connection_status, test_connection as probe_connection
+from job_search_desk.core import load_config, db, save_job
+from job_search_desk.profile import replace_resume, infer_profile, sync_profile, refresh_scores, source_hash
+from job_search_desk.scoring import score
+from job_search_desk.runner import run
+from job_search_desk.resume import read_facts
+from job_search_desk.ai import connection_status, test_connection as probe_connection
 
 SOFTWARE = '''ALEX EXAMPLE
 Senior Software Engineer | Backend Engineer
@@ -71,7 +71,7 @@ def test_prepare_old_install_migrates_without_network(root):
     con=db(root)
     save_job(con,job(),{'score':1,'reasons':[],'warnings':[],'evidence':[],'gaps':[],'disclaimer':'old'})
     con.close()
-    with patch('hr_agent.runner.fetch',side_effect=AssertionError('No discovery')),patch('hr_agent.runner.ingest_imap',side_effect=AssertionError('No mailbox')):
+    with patch('job_search_desk.runner.fetch',side_effect=AssertionError('No discovery')),patch('job_search_desk.runner.ingest_imap',side_effect=AssertionError('No mailbox')):
         result=run(root,allow_email=False,refresh_sources=False)
     assert result['prepared']==1 and result['failures']==0
     cfg=load_config(root)
@@ -124,9 +124,9 @@ def test_invalid_replacement_keeps_current_profile(root):
 def test_ai_readiness_and_synthetic_probe():
     assert not connection_status({'provider':'none'})[0]
     cfg={'provider':'openai','model':'chosen-model','share_resume_facts':True,'max_calls_per_run':3}
-    with patch('hr_agent.ai.secret',return_value=''):
+    with patch('job_search_desk.ai.secret',return_value=''):
         assert 'missing' in connection_status(cfg)[1]
-    with patch('hr_agent.ai.secret',return_value='test-only'),patch('hr_agent.ai.ai_order',return_value=[0,1]) as call:
+    with patch('job_search_desk.ai.secret',return_value='test-only'),patch('job_search_desk.ai.ai_order',return_value=[0,1]) as call:
         ok,message=probe_connection(cfg)
         assert ok and 'synthetic' in message
         assert all('Synthetic fact' in fact for fact in call.call_args.args[1])
@@ -137,7 +137,7 @@ def test_ai_counters_report_local_fallback(root):
     cfg['llm']={'provider':'openai','model':'test-model','share_resume_facts':True,'max_calls_per_run':2}
     (root/'config/settings.json').write_text(json.dumps(cfg))
     con=db(root);save_job(con,job(),score(job(),read_facts(root/cfg['resume']),cfg));con.close()
-    with patch('hr_agent.resume.ai_order',return_value=None):
+    with patch('job_search_desk.resume.ai_order',return_value=None):
         result=run(root,allow_email=False,refresh_sources=False)
     assert result['prepared']==1
     assert result['ai']=={'attempted':1,'used':0,'fallback':1}
@@ -145,7 +145,7 @@ def test_ai_counters_report_local_fallback(root):
 
 def test_dashboard_replacement_refreshes_json_and_results(root,monkeypatch):
     from streamlit.testing.v1 import AppTest
-    import hr_agent.core as core
+    import job_search_desk.core as core
     original=core.load_config
     monkeypatch.setattr(core,'ROOT',root)
     monkeypatch.setattr(core,'load_config',lambda *args:original(args[0] if args else root))
@@ -165,7 +165,7 @@ def test_dashboard_replacement_refreshes_json_and_results(root,monkeypatch):
 
 
 def test_offline_demo_adapts_to_software_profile(root):
-    from hr_agent.runner import demo_root
+    from job_search_desk.runner import demo_root
     cfg=replace_resume(root,SOFTWARE.encode(),'.txt')
     demo=demo_root(root)
     sample=json.loads((demo/'examples/jobs.json').read_text())
