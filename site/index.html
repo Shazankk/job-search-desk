@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Job Search Desk — find jobs that fit, and see why</title>
+<meta name="description" content="A free, open-source job search desk for your Mac. It finds openings for your resume's roles, explains every fit score, and tailors your real resume without inventing anything.">
+<meta property="og:title" content="Job Search Desk">
+<meta property="og:description" content="Find jobs that fit, and see exactly why. Free and open source, runs on your Mac.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%231B2A41'/%3E%3Crect x='7' y='9' width='18' height='4' rx='2' fill='%23FFE45C'/%3E%3Crect x='7' y='16' width='13' height='3' rx='1.5' fill='%23F2F5F9'/%3E%3Crect x='7' y='22' width='9' height='3' rx='1.5' fill='%23F2F5F9'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700;12..96,800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F2F5F9; --card:#FFFFFF; --ink:#1B2A41; --slate:#5A6B80; --line:#D5DDE7;
+  --mark:#FFE45C; --fit:#1F7A55; --minus:#B4441C;
+  --sans:'Bricolage Grotesque',system-ui,sans-serif; --serif:'Source Serif 4',Georgia,serif;
+  --wrap:1120px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 1.0625rem/1.6 var(--sans);font-optical-sizing:auto;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:6px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 24px}
+p{max-width:62ch}
+
+/* top bar */
+.bar{display:flex;align-items:center;justify-content:space-between;padding-top:22px;padding-bottom:22px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;text-decoration:none;font-size:1.05rem}
+.brand svg{width:28px;height:28px}
+.bar nav a{text-decoration:none;color:var(--slate);margin-left:22px;font-weight:500}
+.bar nav a:hover{color:var(--ink)}
+
+/* hero */
+.hero{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;padding-top:48px;padding-bottom:88px}
+.hero>*,.split>*,.limits>*{min-width:0}
+h1{font-size:clamp(2.6rem,5.6vw,4.4rem);line-height:1.02;letter-spacing:-.03em;font-weight:800;margin:0 0 22px;font-variation-settings:'opsz' 96}
+.lede{font-size:1.2rem;color:#33445C;margin:0 0 30px}
+.actions{display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 24px;border-radius:14px;font-weight:700;font-size:1.05rem;text-decoration:none;transition:transform .15s ease,box-shadow .15s ease}
+.btn-main{background:var(--ink);color:#fff;box-shadow:0 6px 0 #0E1726}
+.btn-main:hover{transform:translateY(-2px);box-shadow:0 8px 0 #0E1726}
+.btn-main:active{transform:translateY(4px);box-shadow:0 2px 0 #0E1726}
+.btn-main svg{width:20px;height:20px}
+.btn-quiet{color:var(--ink);border:2px solid var(--ink)}
+.btn-quiet:hover{background:var(--card)}
+.fine{color:var(--slate);font-size:.95rem;margin-top:16px}
+
+/* the score receipt: the one bold element */
+.receipt{margin:0;position:relative;background:var(--card);border-radius:4px 4px 0 0;padding:28px 28px 34px;box-shadow:0 30px 60px -30px rgba(27,42,65,.45);transform:rotate(1.2deg);font-variant-numeric:tabular-nums}
+.receipt::after{content:"";position:absolute;left:0;right:0;bottom:-14px;height:14px;
+  background:radial-gradient(circle at 10px -2px,transparent 10px,var(--card) 11px) 0 0/20px 14px repeat-x}
+.receipt h2{font-size:1.25rem;line-height:1.25;margin:0;font-weight:700}
+.receipt .where{color:var(--slate);margin:4px 0 18px;font-size:.98rem}
+.rows{list-style:none;margin:0;padding:0;border-top:2px dashed var(--line)}
+.rows li{display:flex;justify-content:space-between;gap:16px;padding:10px 0;border-bottom:1px solid #EDF1F5}
+.rows .pts{font-weight:700;white-space:nowrap}
+.rows .minus .pts,.rows .minus .why{color:var(--minus)}
+.why small{display:block;color:var(--slate);font-size:.85rem;line-height:1.35}
+.total{display:flex;justify-content:space-between;align-items:baseline;padding-top:16px}
+.total span{font-weight:600}
+.total strong{font-size:2.4rem;font-weight:800;letter-spacing:-.02em;color:var(--fit)}
+.total strong em{font-style:normal;font-size:1.1rem;color:var(--slate);font-weight:600}
+.gap{margin:12px 0 0;padding:10px 12px;background:#FFF7CC;border-radius:8px;font-size:.92rem}
+.note{color:var(--slate);font-size:.85rem;margin:14px 0 0}
+
+/* sections */
+section{padding:84px 0;border-top:1px solid var(--line)}
+h2.big{font-size:clamp(1.9rem,3.6vw,2.8rem);line-height:1.08;letter-spacing:-.02em;font-weight:800;margin:0 0 16px;max-width:22ch}
+.split{display:grid;grid-template-columns:.9fr 1.1fr;gap:56px;align-items:start}
+
+/* resume: same paragraphs, new order */
+.papers{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.paper{background:var(--card);border:1px solid var(--line);border-radius:6px;padding:20px 20px 8px;font:400 .95rem/1.55 var(--serif)}
+.paper h3{font:600 .95rem/1.2 var(--sans);margin:0 0 12px;color:var(--slate)}
+.paper p{margin:0 0 14px;padding-left:28px;position:relative}
+.paper p b{position:absolute;left:0;top:0;font:700 .8rem/1.9 var(--sans);color:var(--slate)}
+mark{background:linear-gradient(transparent 12%,var(--mark) 12%,var(--mark) 88%,transparent 88%);color:inherit;padding:0 2px}
+
+/* places */
+.typed{background:var(--card);border:2px solid var(--ink);border-radius:12px;padding:14px 16px;font-size:1.1rem;margin:22px 0 14px}
+.typed span{color:var(--slate)}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin:0 0 22px;padding:0;list-style:none}
+.chips li{background:var(--ink);color:#fff;border-radius:999px;padding:7px 14px;font-weight:500}
+.pills{display:inline-flex;border:2px solid var(--ink);border-radius:999px;overflow:hidden}
+.pills span{padding:8px 16px;font-weight:600}
+.pills span+span{border-left:2px solid var(--ink)}
+.pills .on{background:var(--mark)}
+.careers{columns:2;gap:24px;padding:0;margin:18px 0 0;list-style:none}
+.careers li{padding:4px 0;break-inside:avoid}
+
+/* sources */
+.sources{display:grid;grid-template-columns:repeat(5,1fr);gap:0 24px;margin-top:30px;border-top:2px solid var(--ink)}
+.sources div{padding:18px 0;border-bottom:1px solid var(--line)}
+.sources h3{margin:0 0 4px;font-size:1.08rem}
+.sources p{margin:0;color:#33445C;font-size:.97rem}
+
+/* steps: a real sequence */
+.steps{list-style:none;margin:34px 0 0;padding:0;counter-reset:s;display:grid;gap:14px}
+.steps li{counter-increment:s;display:grid;grid-template-columns:56px minmax(0,1fr);gap:18px;align-items:start;background:var(--card);border-radius:16px;padding:22px 24px}
+.steps li::before{content:counter(s);display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--mark);font-weight:800;font-size:1.2rem}
+.steps h3{margin:6px 0 4px;font-size:1.15rem}
+.steps p{margin:0;color:#33445C}
+kbd{overflow-wrap:anywhere;font:600 .9em var(--sans);background:#E7ECF2;border-radius:6px;padding:1px 7px;border-bottom:2px solid #C9D3DF}
+.again{margin-top:30px}
+
+/* limits */
+.limits{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+.limits ul{padding-left:20px;margin:16px 0 0}
+.limits li{margin:8px 0;max-width:52ch}
+
+footer{border-top:1px solid var(--line);padding:34px 0 50px;color:var(--slate);font-size:.95rem}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+
+/* load moment: receipt lines print in once */
+@media (prefers-reduced-motion:no-preference){
+  .rows li,.total,.gap{opacity:0;transform:translateY(6px);animation:print .35s ease forwards}
+  .rows li:nth-child(1){animation-delay:.25s}.rows li:nth-child(2){animation-delay:.4s}
+  .rows li:nth-child(3){animation-delay:.55s}.rows li:nth-child(4){animation-delay:.7s}
+  .rows li:nth-child(5){animation-delay:.85s}.rows li:nth-child(6){animation-delay:1.05s}
+  .total{animation-delay:1.3s}.gap{animation-delay:1.45s}
+  @keyframes print{to{opacity:1;transform:none}}
+}
+@media (max-width:980px){.sources{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:880px){
+  .hero,.split,.limits{grid-template-columns:1fr;gap:40px}
+  .hero{padding-top:24px}
+  .receipt{transform:none}
+}
+@media (max-width:560px){
+  .papers{grid-template-columns:1fr}
+  .careers{columns:1}
+  .sources{grid-template-columns:1fr}
+  .actions .btn{width:100%;justify-content:center}
+  .steps li{grid-template-columns:44px minmax(0,1fr);gap:14px;padding:18px}
+  .bar nav a:not(:last-child){display:none}
+  section{padding:64px 0}
+}
+</style>
+</head>
+<body>
+<header class="wrap bar">
+  <a class="brand" href="#top" aria-label="Job Search Desk home">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="7" fill="#1B2A41"/><rect x="7" y="9" width="18" height="4" rx="2" fill="#FFE45C"/><rect x="7" y="16" width="13" height="3" rx="1.5" fill="#F2F5F9"/><rect x="7" y="22" width="9" height="3" rx="1.5" fill="#F2F5F9"/></svg>
+    Job Search Desk
+  </a>
+  <nav aria-label="Page">
+    <a href="#how">How it works</a>
+    <a href="#start">Get started</a>
+    <a href="https://github.com/Shazankk/job-search-desk">GitHub</a>
+  </nav>
+</header>
+
+<main id="top">
+  <div class="wrap hero">
+    <div>
+      <h1>Find jobs that fit, and see exactly why.</h1>
+      <p class="lede">Job Search Desk runs on your Mac. It searches free job sources for roles that match your resume, scores each one with a plain explanation, and prepares a tailored resume using only what you have already written.</p>
+      <div class="actions">
+        <a class="btn btn-main" href="https://github.com/Shazankk/job-search-desk/archive/refs/heads/main.zip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>
+          Download for Mac
+        </a>
+        <a class="btn btn-quiet" href="https://github.com/Shazankk/job-search-desk">See the code on GitHub</a>
+      </div>
+      <p class="fine">Free and open source. Needs macOS and Python 3.11 or newer. Setup takes about five minutes.</p>
+    </div>
+
+    <figure class="receipt" aria-label="Example fit score for one job">
+      <h2>Head of People</h2>
+      <p class="where">Northwind Software, Pune (hybrid)</p>
+      <ul class="rows">
+        <li><span class="why">Role and seniority<small>Matches your target title and level</small></span><span class="pts">3 / 3</span></li>
+        <li><span class="why">Place and work arrangement<small>Pune, and you accept hybrid</small></span><span class="pts">2 / 2</span></li>
+        <li><span class="why">Skills the job asks for<small>3 of the 4 areas it mentions</small></span><span class="pts">2.25 / 3</span></li>
+        <li><span class="why">Evidence in your resume<small>Exact paragraphs found</small></span><span class="pts">1 / 1</span></li>
+        <li><span class="why">Posted recently<small>Within the last 30 days</small></span><span class="pts">1 / 1</span></li>
+        <li class="minus"><span class="why">Experience asked<small>20+ years; your resume shows 16</small></span><span class="pts">−1.5</span></li>
+      </ul>
+      <div class="total"><span>Fit score</span><strong>7.8 <em>/ 10</em></strong></div>
+      <p class="gap">Not shown on your resume: HR analytics</p>
+      <figcaption class="note">An example. Scores guide your choices; they are not hiring odds.</figcaption>
+    </figure>
+  </div>
+
+  <section id="how">
+    <div class="wrap split">
+      <div>
+        <h2 class="big">Your resume stays yours.</h2>
+        <p>For each job worth applying to, it writes a Word resume with your strongest, most relevant points first. It never adds a skill, a title or a number you did not write.</p>
+        <p>Next to it you get a short brief on the role, ideas for who to contact, and a draft message. A provenance file records every paragraph, so you can check nothing was changed.</p>
+      </div>
+      <div class="papers" aria-label="The same resume paragraphs before and after tailoring">
+        <div class="paper">
+          <h3>Your resume</h3>
+          <p><b>1</b>Ran payroll and attendance for 300 staff across two offices.</p>
+          <p><b>2</b>Rolled out a new HR system and monthly people dashboards.</p>
+          <p><b>3</b>Led <mark>performance reviews</mark> and <mark>compensation</mark> planning for 12 teams.</p>
+        </div>
+        <div class="paper">
+          <h3>Tailored for this job</h3>
+          <p><b>3</b>Led <mark>performance reviews</mark> and <mark>compensation</mark> planning for 12 teams.</p>
+          <p><b>1</b>Ran payroll and attendance for 300 staff across two offices.</p>
+          <p><b>2</b>Rolled out a new HR system and monthly people dashboards.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap split">
+      <div>
+        <h2 class="big">For any career, anywhere.</h2>
+        <p>Type the places you want to work however you like. It understands about 630 cities in 97 countries, and asks you for the country when it meets a town it does not know.</p>
+        <p>It reads your field from your resume, from nursing and teaching to software and sales. Careers outside its list still work from the skills on your resume.</p>
+      </div>
+      <div>
+        <p class="typed"><span>You type:</span> pune, LONDON, bangalore</p>
+        <ul class="chips" aria-label="Recognised places">
+          <li>Pune, India</li><li>London, United Kingdom</li><li>Bengaluru, India</li>
+        </ul>
+        <div class="pills" role="img" aria-label="Work arrangements: on-site, hybrid and remote, with hybrid and remote selected"><span>On-site</span><span class="on">Hybrid</span><span class="on">Remote</span></div>
+        <ul class="careers">
+          <li>HR and people</li><li>Software and data</li><li>Finance and sales</li><li>Marketing and design</li>
+          <li>Product and projects</li><li>Operations and support</li><li>Healthcare and education</li><li>Legal and engineering</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <h2 class="big">Where it looks for jobs</h2>
+      <p>The free sources need no account. It hides reposts and copies of the same job, and shows you which skills your matches keep asking for.</p>
+      <div class="sources">
+        <div><h3>Remote jobs</h3><p>Himalayas, filtered to roles open to people in your country.</p></div>
+        <div><h3>Naukri</h3><p>For places in India, from the job listings Naukri publishes.</p></div>
+        <div><h3>Your job alerts</h3><p>Alert emails from any job site, uploaded or read from a mail folder.</p></div>
+        <div><h3>Adzuna</h3><p>Optional city search in 19 countries with a free key.</p></div>
+        <div><h3>LinkedIn</h3><p>Optional and off until you turn it on. It is unofficial and can stop working.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="start">
+    <div class="wrap">
+      <h2 class="big">Get started on your Mac</h2>
+      <ol class="steps">
+        <li><div><h3>Install Python</h3><p>Download the latest Python 3 for macOS from <a href="https://www.python.org/downloads/macos/">python.org</a> and run the installer. Skip this if you already have Python 3.11 or newer.</p></div></li>
+        <li><div><h3>Download and unzip</h3><p>Use the download button, open the ZIP, and move the <kbd>job-search-desk-main</kbd> folder somewhere permanent, such as Documents.</p></div></li>
+        <li><div><h3>Run setup</h3><p>In the folder, right-click <kbd>SETUP.command</kbd> and choose <kbd>Open</kbd>. macOS asks once because the file came from the internet. Setup installs what it needs and opens the dashboard in your browser.</p></div></li>
+        <li><div><h3>Add your resume and search</h3><p>In <kbd>Resume &amp; settings</kbd>, upload your resume and set your places. Then click <kbd>Find &amp; prepare jobs</kbd>. Next time, just double-click <kbd>OPEN_DASHBOARD.command</kbd>.</p></div></li>
+      </ol>
+      <div class="actions again">
+        <a class="btn btn-main" href="https://github.com/Shazankk/job-search-desk/archive/refs/heads/main.zip">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>
+          Download for Mac
+        </a>
+        <a class="btn btn-quiet" href="https://github.com/Shazankk/job-search-desk/blob/main/START_HERE.txt">Read the full setup guide</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap limits">
+      <div>
+        <h2 class="big">What it will not do</h2>
+        <ul>
+          <li>Apply for jobs or message anyone. You review everything and apply yourself.</li>
+          <li>Invent experience, skills or achievements.</li>
+          <li>Promise interviews. Scores are a guide built from keywords, not hiring odds.</li>
+          <li>Find every job. No single source lists them all, so keep your usual job alerts too.</li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="big">Your data stays on your Mac</h2>
+        <ul>
+          <li>Your resume, job history and documents are saved in the folder you choose.</li>
+          <li>Searches send only the role and place, never your resume.</li>
+          <li>Passwords and keys go in your Mac's Keychain.</li>
+          <li>AI is optional and off unless you add your own key and agree to share job text.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Job Search Desk is free and open source under the MIT licence.</span>
+    <span><a href="https://github.com/Shazankk/job-search-desk">Source code</a> &nbsp; <a href="https://github.com/Shazankk/job-search-desk/issues">Report a problem</a></span>
+  </div>
+</footer>
+</body>
+</html>

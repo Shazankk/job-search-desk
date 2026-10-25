@@ -2,6 +2,8 @@
 
 A local-first job-search desk that finds openings for your resume's roles, explains their fit and prepares factual application documents for you to review.
 
+**Website and Mac download:** https://shazankk.github.io/job-search-desk/
+
 ## What it does
 
 - Runs on your computer as a small Streamlit dashboard at http://127.0.0.1:8501.
