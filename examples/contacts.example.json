@@ -1,0 +1,12 @@
+[
+  {
+    "name": "EXAMPLE ONLY - replace with a person you verified",
+    "company": "Exact employer name",
+    "role": "Verified current role",
+    "profile_url": "https://example.com/profile",
+    "evidence_url": "https://example.com/company-team",
+    "reason": "Explain the evidence connecting this person to recruitment for this company. Do not assume they are the hiring manager.",
+    "verified": false,
+    "verified_on": ""
+  }
+]

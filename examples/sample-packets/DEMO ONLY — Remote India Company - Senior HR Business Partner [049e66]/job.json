@@ -1,0 +1,23 @@
+{
+  "id": "049e66cbd9db027dd11a",
+  "url": "https://example.com/demo/senior-hrbp",
+  "title": "Senior HR Business Partner",
+  "company": "DEMO ONLY — Remote India Company",
+  "location": "Remote, India",
+  "description": "Synthetic example for testing. Partner with business leadership on people strategy, workforce planning, performance management, compensation, employee relations and engagement. Lead change management and use dashboards and HR analytics. Experience in technology and HR operations is desired.",
+  "source": "synthetic-demo",
+  "published": "",
+  "first_seen": "2026-10-25T21:52:23.390148+00:00",
+  "last_seen": "2026-10-25T21:52:23.412613+00:00",
+  "score": 9.0,
+  "explanation": "{\"score\": 9.0, \"reasons\": [\"Role/title: 3.0/3; configured title match=True, seniority signal=True\", \"Location: 2/2; remote with India/global location; verify work eligibility\", \"Skill groups: 3.0/3; 8/8 requested groups supported\", \"Resume evidence: 1.0/1; exact source paragraphs available\", \"Freshness: 0.0/1; based on source date, never inferred\"], \"matched_groups\": [\"analytics\", \"change\", \"culture\", \"operations\", \"performance\", \"rewards\", \"strategy\", \"talent\"], \"gaps\": [], \"warnings\": [\"Publication date unknown; first-seen is not publication date\"], \"evidence\": [\"HR Head | Strategic HR Business Partner | People Operations\", \"HR leader with 16 years across IT services, software technology and insurance. Connects people strategy with dependable HR operations, payroll, performance management and compensation & benefits. Leads talent acquisition, learning & development, organisation development and employee engagement, supported by statutory compliance, M&A integration, HR analytics and HRMS digitisation.\", \"Culture award: Established a peer-nominated culture award that recognised inclusive teamwork across distributed teams.\", \"People integration: Aligned onboarding, policies and compensation review schedules during an M&A integration without interrupting payroll.\", \"HR digitisation: Introduced an HRMS and monthly dashboards to replace disconnected leave, attendance and appraisal trackers.\", \"Strategic HR & Business Partnering (HRBP)  \\u2022  HR Operations, Policies & SOPs  \\u2022  Performance Management (KRAs, KPIs, Competency Framework)  \\u2022  Talent Acquisition & Workforce Planning  \\u2022  Compensation, Benefits & Rewards  \\u2022  Learning & Development  \\u2022  Organisation Development & Change Management  \\u2022  Employee Engagement & Experience  \\u2022  Employee Relations  \\u2022  Employer Branding (LinkedIn, AmbitionBox)  \\u2022  HR Analytics & Dashboards  \\u2022  Statutory Compliance, Labour Law & POSH  \\u2022  M&A Integration  \\u2022  Diversity, Equity & Inclusion\"], \"listed_skills_matched\": [\"HR Operations\", \"Performance Management\", \"Compensation\", \"Employee Relations\"], \"industries\": [], \"required_years\": null, \"resume_years\": 16, \"career_fields\": [\"hr\"], \"role_aligned\": true, \"location_eligible\": true, \"disclaimer\": \"Heuristic fit score, not a hiring probability. Keyword overlap cannot prove eligibility.\"}",
+  "status": "new",
+  "needs_review": 0,
+  "artifact": null,
+  "apply_url": "https://example.com/demo/senior-hrbp",
+  "source_url": "",
+  "expires": "",
+  "eligibility": "",
+  "eligibility_note": "",
+  "duplicate_of": null
+}

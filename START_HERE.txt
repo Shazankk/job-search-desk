@@ -1,0 +1,108 @@
+JOB SEARCH DESK — START HERE (MAC)
+
+Find job openings, understand their fit and prepare documents on your computer.
+You review the results and apply yourself. The app never applies or messages
+employers or contacts.
+
+1. INSTALL PYTHON
+
+Visit https://www.python.org/downloads/macos/ in your browser.
+Download and run a Python 3 installer, version 3.11 or newer.
+Follow the installer's instructions. You can skip this step if you already
+have a suitable Python version installed.
+
+2. DOWNLOAD AND EXTRACT
+
+On the GitHub repository page, choose Code, then Download ZIP.
+Double-click the downloaded archive to extract it.
+Move the extracted job-search-desk folder to a permanent location, such as
+Documents. Keep it private: your resume and job history will be saved there.
+If you want local-only storage, choose a folder outside cloud sync.
+
+3. RUN SETUP
+
+Open the extracted folder and double-click SETUP.command.
+A Terminal window opens. Leave it open while packages install.
+Internet access is needed. The dashboard then opens in your browser,
+normally at http://127.0.0.1:8501.
+
+If macOS blocks a .command file, right-click it in Finder and choose Open.
+Follow the security prompt for that file. If needed, look in System Settings
+> Privacy & Security for its Open Anyway option. Only open a download you trust.
+If setup fails, read the message in Terminal before closing it.
+
+4. ADD YOUR RESUME AND PREFERENCES
+
+Open Resume & settings in the dashboard.
+A fictional sample resume is included so you can try the app immediately.
+Replace it with your own DOCX resume or paste your resume text.
+Review the suggested roles and skills.
+
+Enter the places where you want to work. Capitals and common aliases work:
+pune, LONDON, bangalore or Germany. If a town is unknown, choose its country.
+Choose On-site, Hybrid and/or Remote. Remote means roles open to your country;
+you still need to check each employer's eligibility requirements.
+Save your settings. The current tab stays selected after saving.
+
+5. REVIEW YOUR SOURCES
+
+Open Discovery sources. Free default sources need no account or API key.
+Himalayas finds remote roles. Naukri sitemaps find leads for places in India.
+Optional Adzuna city search needs an API key and supports 19 countries.
+Source coverage varies by place and career.
+
+LinkedIn public search is OFF by default. It is unofficial, its terms prohibit
+scraping, and access can stop. Read the warning before enabling it.
+You can also upload saved job-alert emails (.eml), connect read-only IMAP,
+use employer watchlists or import jobs manually.
+
+6. FIND JOBS AND REVIEW LEADS
+
+Click Find & prepare jobs.
+In Jobs, read each score's reasons, deductions and gaps.
+The skills gap panel shows requested skill areas absent from your resume.
+A score is a keyword estimate, not hiring odds or proof of eligibility.
+Reposts and cross-source copies are hidden as duplicates.
+
+For incomplete leads, open the listing and paste the full job description.
+Naukri and Adzuna leads need this step. LinkedIn descriptions may be completed
+within its request limits when that source is enabled.
+Use Prepare saved jobs after completing descriptions.
+Check Activity if a source fails; a failure does not mean there are no jobs.
+
+7. OPEN YOUR DOCUMENTS
+
+In Jobs, click Open prepared documents folder.
+Documents are saved inside the project folder:
+
+artifacts/<date first found>/<Company - Job title [id]>/
+
+Each prepared job has a Word resume (tailored-resume.docx), brief.md,
+contacts.md, outreach.md, job.json and resume-provenance.json.
+The provenance file lets you check that your resume paragraphs were preserved.
+Tailoring only changes paragraph order. It never invents resume content.
+Read the documents and verify the listing before applying yourself.
+No jobs, interviews or ATS ranking are guaranteed.
+
+8. OPTIONAL: DAILY RUN
+
+Double-click INSTALL_DAILY.command to schedule a run at 06:30 local time.
+Your Mac must be logged in and available to run it. It cannot run powered off.
+Keep the project folder in place. After moving it, reinstall the schedule.
+UNINSTALL_DAILY.command removes the schedule.
+An email digest needs separate SMTP setup; scheduling alone does not enable it.
+
+OPENING, STOPPING AND OTHER TOOLS
+
+OPEN_DASHBOARD.command opens or restarts the dashboard. It is safe to click again.
+STOP_DASHBOARD.command stops it. If port 8501 is busy, Terminal shows the address.
+RUN_NOW.command runs enabled sources and the digest if you configured it.
+DEMO.command runs a separate offline example.
+CREDENTIALS.command stores optional secrets in macOS Keychain.
+IMPORT_OLD_PROJECT.command imports an older project's settings and local history.
+
+AI paragraph ordering is optional. OpenAI or Claude API access needs a key,
+consent to share job text and resume paragraphs, and may incur charges.
+Local ordering works without it. No account or key is needed for default search.
+
+Read README.md for source limits, privacy, manual commands and troubleshooting.

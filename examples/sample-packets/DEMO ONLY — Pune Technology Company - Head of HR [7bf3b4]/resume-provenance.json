@@ -1,0 +1,222 @@
+{
+  "source_text_sha256": "b4ead2a31ad02dde0fde46e4dd8eb71c0467e7d12317723c50ec418c9e434865",
+  "policy": "Every source paragraph retained verbatim. Only within-group ordering changes.",
+  "paragraph_order": [
+    {
+      "source_id": 0,
+      "text": "ASHA EXAMPLE"
+    },
+    {
+      "source_id": 1,
+      "text": "HR Head | Strategic HR Business Partner | People Operations"
+    },
+    {
+      "source_id": 2,
+      "text": "Pune, Maharashtra (Open to Remote)  |  +91 00000 00000  |  asha.example@example.com"
+    },
+    {
+      "source_id": 3,
+      "text": "16 Years of Experience  |  IT Services, Technology & Insurance (BFSI)  |  Executive Programme in HR Management"
+    },
+    {
+      "source_id": 4,
+      "text": "PROFESSIONAL SUMMARY"
+    },
+    {
+      "source_id": 5,
+      "text": "HR leader with 16 years across IT services, software technology and insurance. Connects people strategy with dependable HR operations, payroll, performance management and compensation & benefits. Leads talent acquisition, learning & development, organisation development and employee engagement, supported by statutory compliance, M&A integration, HR analytics and HRMS digitisation."
+    },
+    {
+      "source_id": 6,
+      "text": "KEY ACHIEVEMENTS"
+    },
+    {
+      "source_id": 9,
+      "text": "People integration: Aligned onboarding, policies and compensation review schedules during an M&A integration without interrupting payroll."
+    },
+    {
+      "source_id": 11,
+      "text": "Leadership development: Built a practical L&D series where new managers rehearsed feedback conversations and team planning."
+    },
+    {
+      "source_id": 10,
+      "text": "HR digitisation: Introduced an HRMS and monthly dashboards to replace disconnected leave, attendance and appraisal trackers."
+    },
+    {
+      "source_id": 7,
+      "text": "Workplace certification: Coordinated an internal workplace-certification programme using staff feedback and documented improvements to manager practices."
+    },
+    {
+      "source_id": 8,
+      "text": "Culture award: Established a peer-nominated culture award that recognised inclusive teamwork across distributed teams."
+    },
+    {
+      "source_id": 12,
+      "text": "CORE COMPETENCIES"
+    },
+    {
+      "source_id": 13,
+      "text": "Strategic HR & Business Partnering (HRBP)  •  HR Operations, Policies & SOPs  •  Performance Management (KRAs, KPIs, Competency Framework)  •  Talent Acquisition & Workforce Planning  •  Compensation, Benefits & Rewards  •  Learning & Development  •  Organisation Development & Change Management  •  Employee Engagement & Experience  •  Employee Relations  •  Employer Branding (LinkedIn, AmbitionBox)  •  HR Analytics & Dashboards  •  Statutory Compliance, Labour Law & POSH  •  M&A Integration  •  Diversity, Equity & Inclusion"
+    },
+    {
+      "source_id": 14,
+      "text": "HRMS / HR Tech: Keka, Zoho People, greytHR; exposure to SAP and Darwinbox; AI-based recruitment tools"
+    },
+    {
+      "source_id": 15,
+      "text": "PROFESSIONAL EXPERIENCE"
+    },
+    {
+      "source_id": 16,
+      "text": "HR Head\tJan 2023 – Present"
+    },
+    {
+      "source_id": 17,
+      "text": "Fictional Northwind Software Pvt Ltd, Pune"
+    },
+    {
+      "source_id": 21,
+      "text": "Guided M&A people integration through policy mapping, manager briefings and change management workshops."
+    },
+    {
+      "source_id": 22,
+      "text": "Reviewed statutory compliance and POSH training completion with an established internal committee."
+    },
+    {
+      "source_id": 18,
+      "text": "Set the people strategy for software delivery teams and translated staffing priorities into quarterly workforce plans."
+    },
+    {
+      "source_id": 19,
+      "text": "Led compensation reviews with clear role bands and documented decisions on benefits and rewards."
+    },
+    {
+      "source_id": 20,
+      "text": "Implemented Keka HRIS workflows for leave, attendance and payroll checks, with HR dashboards for leadership reviews."
+    },
+    {
+      "source_id": 23,
+      "text": "Senior HR Manager\tJul 2019 – Dec 2022"
+    },
+    {
+      "source_id": 24,
+      "text": "Fictional Bluepeak Technologies Pvt Ltd, Pune"
+    },
+    {
+      "source_id": 28,
+      "text": "Organised learning & development sessions and employee engagement circles using feedback from project teams."
+    },
+    {
+      "source_id": 25,
+      "text": "Rebuilt performance management around agreed KRAs, KPIs and a competency framework for technical and support roles."
+    },
+    {
+      "source_id": 26,
+      "text": "Managed talent acquisition from hiring plans through structured interviews and onboarding check-ins."
+    },
+    {
+      "source_id": 27,
+      "text": "Introduced Zoho People records and self-service requests while reconciling employee data before migration."
+    },
+    {
+      "source_id": 29,
+      "text": "Published HR policies and SOPs that clarified approvals, employee relations processes and manager responsibilities."
+    },
+    {
+      "source_id": 30,
+      "text": "HR Business Partner\tApr 2016 – Jun 2019"
+    },
+    {
+      "source_id": 31,
+      "text": "Fictional Harbourline Insurance Ltd, Mumbai"
+    },
+    {
+      "source_id": 34,
+      "text": "Delivered POSH awareness workshops and tracked statutory compliance actions with the HR operations team."
+    },
+    {
+      "source_id": 32,
+      "text": "Partnered with insurance operations leaders on staffing, succession discussions and people risks across service teams."
+    },
+    {
+      "source_id": 33,
+      "text": "Coordinated appraisals and compensation reviews with consistent evidence requirements for managers."
+    },
+    {
+      "source_id": 35,
+      "text": "Supported organisation development during a branch restructuring through role consultations and manager coaching."
+    },
+    {
+      "source_id": 36,
+      "text": "HR Manager\tJan 2013 – Mar 2016"
+    },
+    {
+      "source_id": 37,
+      "text": "Fictional Willowquay IT Services Pvt Ltd, Pune"
+    },
+    {
+      "source_id": 40,
+      "text": "Launched a learning calendar covering communication, supervisory skills and employee relations responsibilities."
+    },
+    {
+      "source_id": 38,
+      "text": "Owned monthly payroll inputs, attendance reconciliation and benefit enrolment checks for IT services staff."
+    },
+    {
+      "source_id": 41,
+      "text": "Used greytHR reports to monitor headcount movements and resolve discrepancies before management reporting."
+    },
+    {
+      "source_id": 39,
+      "text": "Planned recruitment campaigns with delivery managers and maintained a shared view of vacancies and joining dates."
+    },
+    {
+      "source_id": 42,
+      "text": "HR Executive\tJan 2010 – Dec 2012"
+    },
+    {
+      "source_id": 43,
+      "text": "Fictional Copperkite Business Systems Pvt Ltd, Pune"
+    },
+    {
+      "source_id": 47,
+      "text": "Coordinated staff engagement activities and maintained accessible records of HR policies and training attendance."
+    },
+    {
+      "source_id": 44,
+      "text": "Prepared joining records, induction schedules and payroll change registers with documented review steps."
+    },
+    {
+      "source_id": 45,
+      "text": "Scheduled recruitment interviews and maintained candidate updates through offer and onboarding stages."
+    },
+    {
+      "source_id": 46,
+      "text": "Supported annual appraisals by collecting review forms and following up on incomplete manager feedback."
+    },
+    {
+      "source_id": 48,
+      "text": "EDUCATION"
+    },
+    {
+      "source_id": 49,
+      "text": "Executive Programme in HR Management, Fictional Meadowbridge Institute of Management, 2018"
+    },
+    {
+      "source_id": 50,
+      "text": "Bachelor of Business Administration, Fictional Lanternvale College, 2009"
+    },
+    {
+      "source_id": 51,
+      "text": "CERTIFICATIONS"
+    },
+    {
+      "source_id": 52,
+      "text": "Internal HR Analytics Workshop Certificate; Workplace Facilitation Practice Certificate; POSH Awareness Training"
+    },
+    {
+      "source_id": 53,
+      "text": "Languages: English, Hindi, Marathi"
+    }
+  ]
+}

@@ -1,0 +1,432 @@
+{
+  "resume": "examples/sample-resume.docx",
+  "candidate_name": "ASHA EXAMPLE",
+  "target_titles": [
+    "HR Head",
+    "Head of HR",
+    "HR Director",
+    "Director HR",
+    "Human Resources",
+    "HR Manager",
+    "HR Business Partner",
+    "HRBP",
+    "People Partner",
+    "People Operations",
+    "People and Culture",
+    "People Practice",
+    "CHRO",
+    "Chief Human Resources Officer",
+    "Chief People Officer",
+    "HR Leader"
+  ],
+  "locations": [
+    "Pune, India"
+  ],
+  "work_modes": [
+    "onsite",
+    "hybrid",
+    "remote"
+  ],
+  "home_country": "India",
+  "min_score": 5.5,
+  "max_packets_per_run": 15,
+  "stale_days": 30,
+  "sources": [
+    {
+      "type": "greenhouse",
+      "board": "druva",
+      "company": "Druva",
+      "enabled": false
+    },
+    {
+      "type": "greenhouse",
+      "board": "rubrik",
+      "company": "Rubrik",
+      "enabled": false
+    },
+    {
+      "type": "lever",
+      "board": "mindtickle",
+      "company": "Mindtickle",
+      "enabled": false
+    },
+    {
+      "type": "ashby",
+      "board": "tekion",
+      "company": "Tekion",
+      "enabled": false
+    }
+  ],
+  "llm": {
+    "provider": "none",
+    "model": "",
+    "share_resume_facts": false,
+    "max_calls_per_run": 3
+  },
+  "email": {
+    "enabled": false,
+    "host": "smtp.gmail.com",
+    "port": 465,
+    "security": "ssl",
+    "username": "",
+    "from": "",
+    "to": "",
+    "include_job_details": false
+  },
+  "schedule": {
+    "hour": 6,
+    "minute": 30
+  },
+  "alerts_imap": {
+    "enabled": false,
+    "host": "imap.gmail.com",
+    "port": 993,
+    "username": "",
+    "folder": "Job Alerts",
+    "lookback_days": 7,
+    "max_messages": 30
+  },
+  "target_seniority": "senior",
+  "skill_groups": {
+    "strategy": [
+      "people strategy",
+      "strategic hr",
+      "business partner",
+      "hrbp"
+    ],
+    "operations": [
+      "hr operations",
+      "people operations",
+      "hr policies",
+      "payroll"
+    ],
+    "performance": [
+      "performance management",
+      "appraisals",
+      "kras",
+      "kpis"
+    ],
+    "talent": [
+      "talent acquisition",
+      "recruitment",
+      "workforce planning"
+    ],
+    "rewards": [
+      "compensation",
+      "benefits",
+      "rewards"
+    ],
+    "development": [
+      "learning",
+      "l&d",
+      "leadership development",
+      "training"
+    ],
+    "culture": [
+      "engagement",
+      "culture",
+      "employee experience",
+      "gptw"
+    ],
+    "compliance": [
+      "compliance",
+      "posh",
+      "labour law",
+      "labor law"
+    ],
+    "change": [
+      "m&a",
+      "integration",
+      "change management",
+      "organisation development"
+    ],
+    "analytics": [
+      "analytics",
+      "dashboards",
+      "hris",
+      "hrms",
+      "keka",
+      "zoho"
+    ],
+    "sap": [
+      "SAP"
+    ],
+    "strategic hr & business partnering (hrbp)": [
+      "Strategic HR & Business Partnering (HRBP)"
+    ],
+    "hr operations": [
+      "HR Operations"
+    ],
+    "policies & sops": [
+      "Policies & SOPs"
+    ],
+    "performance management (kras": [
+      "Performance Management (KRAs"
+    ],
+    "kpis": [
+      "KPIs"
+    ],
+    "competency framework)": [
+      "Competency Framework)"
+    ],
+    "talent acquisition & workforce planning": [
+      "Talent Acquisition & Workforce Planning"
+    ],
+    "compensation": [
+      "Compensation"
+    ],
+    "benefits & rewards": [
+      "Benefits & Rewards"
+    ],
+    "learning & development": [
+      "Learning & Development"
+    ],
+    "organisation development & change management": [
+      "Organisation Development & Change Management"
+    ],
+    "employee engagement & experience": [
+      "Employee Engagement & Experience"
+    ],
+    "employee relations": [
+      "Employee Relations"
+    ],
+    "employer branding (linkedin": [
+      "Employer Branding (LinkedIn"
+    ],
+    "ambitionbox)": [
+      "AmbitionBox)"
+    ],
+    "hr analytics & dashboards": [
+      "HR Analytics & Dashboards"
+    ],
+    "statutory compliance": [
+      "Statutory Compliance"
+    ],
+    "labour law & posh": [
+      "Labour Law & POSH"
+    ],
+    "m&a integration": [
+      "M&A Integration"
+    ],
+    "hr budgeting & cost optimisation": [
+      "HR Budgeting & Cost Optimisation"
+    ],
+    "vendor & stakeholder management": [
+      "Vendor & Stakeholder Management"
+    ],
+    "diversity": [
+      "Diversity"
+    ],
+    "equity & inclusion": [
+      "Equity & Inclusion"
+    ],
+    "hrms / hr tech: keka": [
+      "HRMS / HR Tech: Keka"
+    ],
+    "zoho people": [
+      "Zoho People"
+    ],
+    "greythr": [
+      "greytHR"
+    ],
+    "qandle": [
+      "Qandle"
+    ],
+    "adrenalin": [
+      "Adrenalin"
+    ],
+    "exposure to sap and people factor": [
+      "exposure to SAP and People Factor"
+    ],
+    "ai-based recruitment tools": [
+      "AI-based recruitment tools"
+    ]
+  },
+  "search_profile": {
+    "source_hash": "352582249652f730b3b1c9a4c5d8d8d342555b814b261aadacda6b14cf28d045",
+    "families": [
+      "hr"
+    ],
+    "detected_skills": {
+      "strategy": [
+        "people strategy",
+        "strategic hr",
+        "business partner",
+        "hrbp"
+      ],
+      "operations": [
+        "hr operations",
+        "hr policies",
+        "payroll"
+      ],
+      "performance": [
+        "performance management",
+        "appraisals",
+        "kras",
+        "kpis"
+      ],
+      "talent": [
+        "talent acquisition",
+        "recruitment",
+        "workforce planning"
+      ],
+      "rewards": [
+        "compensation",
+        "benefits",
+        "rewards"
+      ],
+      "development": [
+        "learning",
+        "l&d",
+        "leadership development",
+        "training"
+      ],
+      "culture": [
+        "engagement",
+        "culture",
+        "gptw"
+      ],
+      "compliance": [
+        "compliance",
+        "posh",
+        "labour law"
+      ],
+      "change": [
+        "m&a",
+        "integration",
+        "change management",
+        "organisation development"
+      ],
+      "analytics": [
+        "analytics",
+        "dashboards",
+        "hris",
+        "hrms",
+        "keka",
+        "zoho"
+      ],
+      "sap": [
+        "SAP"
+      ],
+      "strategic hr & business partnering (hrbp)": [
+        "Strategic HR & Business Partnering (HRBP)"
+      ],
+      "hr operations": [
+        "HR Operations"
+      ],
+      "policies & sops": [
+        "Policies & SOPs"
+      ],
+      "performance management (kras": [
+        "Performance Management (KRAs"
+      ],
+      "kpis": [
+        "KPIs"
+      ],
+      "competency framework)": [
+        "Competency Framework)"
+      ],
+      "talent acquisition & workforce planning": [
+        "Talent Acquisition & Workforce Planning"
+      ],
+      "compensation": [
+        "Compensation"
+      ],
+      "benefits & rewards": [
+        "Benefits & Rewards"
+      ],
+      "learning & development": [
+        "Learning & Development"
+      ],
+      "organisation development & change management": [
+        "Organisation Development & Change Management"
+      ],
+      "employee engagement & experience": [
+        "Employee Engagement & Experience"
+      ],
+      "employee relations": [
+        "Employee Relations"
+      ],
+      "employer branding (linkedin": [
+        "Employer Branding (LinkedIn"
+      ],
+      "ambitionbox)": [
+        "AmbitionBox)"
+      ],
+      "hr analytics & dashboards": [
+        "HR Analytics & Dashboards"
+      ],
+      "statutory compliance": [
+        "Statutory Compliance"
+      ],
+      "labour law & posh": [
+        "Labour Law & POSH"
+      ],
+      "m&a integration": [
+        "M&A Integration"
+      ],
+      "hr budgeting & cost optimisation": [
+        "HR Budgeting & Cost Optimisation"
+      ],
+      "vendor & stakeholder management": [
+        "Vendor & Stakeholder Management"
+      ],
+      "diversity": [
+        "Diversity"
+      ],
+      "equity & inclusion": [
+        "Equity & Inclusion"
+      ],
+      "hrms / hr tech: keka": [
+        "HRMS / HR Tech: Keka"
+      ],
+      "zoho people": [
+        "Zoho People"
+      ],
+      "greythr": [
+        "greytHR"
+      ],
+      "qandle": [
+        "Qandle"
+      ],
+      "adrenalin": [
+        "Adrenalin"
+      ],
+      "exposure to sap and people factor": [
+        "exposure to SAP and People Factor"
+      ],
+      "ai-based recruitment tools": [
+        "AI-based recruitment tools"
+      ]
+    },
+    "method": "local resume evidence",
+    "review_needed": false,
+    "note": "Search suggestions only. Location preferences are kept separately; no resume claims are added."
+  },
+  "discovery": {
+    "max_queries": 3,
+    "queries": [],
+    "himalayas": {
+      "enabled": true,
+      "pages_per_query": 2
+    },
+    "adzuna": {
+      "enabled": false,
+      "pages_per_query": 1,
+      "radius_km": 25
+    },
+    "linkedin_public": {
+      "enabled": false,
+      "max_searches_per_run": 5,
+      "max_details_per_run": 15,
+      "delay_seconds": 3,
+      "daily_request_limit": 50,
+      "job_age_days": 30
+    },
+    "naukri_sitemap": {
+      "enabled": true,
+      "max_leads_per_run": 40,
+      "job_age_days": 30
+    }
+  }
+}

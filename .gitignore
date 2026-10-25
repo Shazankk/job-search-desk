@@ -1,0 +1,12 @@
+.venv/
+__pycache__/
+.pytest_cache/
+.env
+config/settings.json
+data/
+artifacts/
+logs/
+*.sqlite*
+.DS_Store
+examples/demo-output/
+.agents/

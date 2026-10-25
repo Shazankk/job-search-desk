@@ -1,0 +1,23 @@
+{
+  "id": "7bf3b4b8e1ea86b0dbbb",
+  "url": "https://example.com/demo/hr-head",
+  "title": "Head of HR",
+  "company": "DEMO ONLY — Pune Technology Company",
+  "location": "Pune, India — Hybrid",
+  "description": "Synthetic test vacancy, not a real job. Lead people strategy, strategic HR, performance management, compensation and benefits, talent acquisition, learning and development, employee engagement, statutory compliance, POSH and HR analytics. Support M&A integration and HRMS automation. Senior leadership experience in IT services and technology required.",
+  "source": "synthetic-demo",
+  "published": "",
+  "first_seen": "2026-10-25T21:52:23.384037+00:00",
+  "last_seen": "2026-10-25T21:52:23.406552+00:00",
+  "score": 9.0,
+  "explanation": "{\"score\": 9.0, \"reasons\": [\"Role/title: 3.0/3; configured title match=True, seniority signal=True\", \"Location: 2/2; target city named in location\", \"Skill groups: 3.0/3; 9/9 requested groups supported\", \"Resume evidence: 1.0/1; exact source paragraphs available\", \"Freshness: 0.0/1; based on source date, never inferred\"], \"matched_groups\": [\"analytics\", \"change\", \"compliance\", \"culture\", \"development\", \"performance\", \"rewards\", \"strategy\", \"talent\"], \"gaps\": [], \"warnings\": [\"Publication date unknown; first-seen is not publication date\"], \"evidence\": [\"HR Head | Strategic HR Business Partner | People Operations\", \"HR leader with 16 years across IT services, software technology and insurance. Connects people strategy with dependable HR operations, payroll, performance management and compensation & benefits. Leads talent acquisition, learning & development, organisation development and employee engagement, supported by statutory compliance, M&A integration, HR analytics and HRMS digitisation.\", \"Culture award: Established a peer-nominated culture award that recognised inclusive teamwork across distributed teams.\", \"People integration: Aligned onboarding, policies and compensation review schedules during an M&A integration without interrupting payroll.\", \"HR digitisation: Introduced an HRMS and monthly dashboards to replace disconnected leave, attendance and appraisal trackers.\", \"Leadership development: Built a practical L&D series where new managers rehearsed feedback conversations and team planning.\"], \"listed_skills_matched\": [\"Performance Management\", \"Compensation\", \"Statutory Compliance\", \"M&A Integration\"], \"industries\": [\"technology\"], \"required_years\": null, \"resume_years\": 16, \"career_fields\": [\"hr\"], \"role_aligned\": true, \"location_eligible\": true, \"disclaimer\": \"Heuristic fit score, not a hiring probability. Keyword overlap cannot prove eligibility.\"}",
+  "status": "new",
+  "needs_review": 0,
+  "artifact": null,
+  "apply_url": "https://example.com/demo/hr-head",
+  "source_url": "",
+  "expires": "",
+  "eligibility": "",
+  "eligibility_note": "",
+  "duplicate_of": null
+}

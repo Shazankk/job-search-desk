@@ -1,0 +1,9 @@
+From: alerts@example.com
+To: candidate@example.com
+Subject: DEMO ONLY - HR opportunity
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+
+This is a synthetic alert for the offline parser test.
+Head of HR: https://example.com/demo/alert-hr
+Please check the company site and paste the full description before preparing a packet.

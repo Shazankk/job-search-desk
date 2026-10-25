@@ -1,0 +1,34 @@
+[
+  {
+    "title": "Head of HR",
+    "company": "DEMO ONLY — Pune Technology Company",
+    "location": "Pune, India — Hybrid",
+    "url": "https://example.com/demo/hr-head",
+    "description": "Synthetic test vacancy, not a real job. Lead people strategy, strategic HR, performance management, compensation and benefits, talent acquisition, learning and development, employee engagement, statutory compliance, POSH and HR analytics. Support M&A integration and HRMS automation. Senior leadership experience in IT services and technology required.",
+    "published": ""
+  },
+  {
+    "title": "Senior HR Business Partner",
+    "company": "DEMO ONLY — Remote India Company",
+    "location": "Remote, India",
+    "url": "https://example.com/demo/senior-hrbp",
+    "description": "Synthetic example for testing. Partner with business leadership on people strategy, workforce planning, performance management, compensation, employee relations and engagement. Lead change management and use dashboards and HR analytics. Experience in technology and HR operations is desired.",
+    "published": ""
+  },
+  {
+    "title": "Junior HR Executive",
+    "company": "DEMO ONLY — Junior Example",
+    "location": "Pune, India",
+    "url": "https://example.com/demo/junior-hr",
+    "description": "Synthetic junior vacancy. Support HR operations, payroll and recruitment administration. This role is intended for an entry-level HR executive and is included to exercise seniority penalties.",
+    "published": ""
+  },
+  {
+    "title": "Director Human Resources",
+    "company": "DEMO ONLY — Geography Check",
+    "location": "Remote, United States only",
+    "url": "https://example.com/demo/us-only",
+    "description": "Synthetic example. Lead people strategy, compensation, compliance, engagement and performance management. Remote role restricted to the United States. This should not appear as an eligible India remote match.",
+    "published": ""
+  }
+]
